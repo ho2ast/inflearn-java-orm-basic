@@ -45,11 +45,21 @@ public class JpaMain {
 //            em.persist(member1);
 //            em.persist(member2);
 
-            Member member = new Member(201L, "member201");
-            em.persist(member);
-            em.flush();
-            System.out.println("========================");
+//            Member member = new Member(201L, "member201");
+//            em.persist(member);
+//            em.flush();
 
+//            준영속
+//            Member findMember = em.find(Member.class, 1L);
+//            findMember.setName("HelloJpa");
+//            em.detach(findMember); // 특정 엔티디만 준영속 상태
+//            em.clear(); // 영속성 컨텍스트 완전히 초기화, 1차 캐시 통으로 초기화
+
+            Member member = new Member();
+            member.setUsername("A");
+//            member.setRoleType(RoleType.GUEST);
+//            em.persist(member);
+            System.out.println("========================");
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
