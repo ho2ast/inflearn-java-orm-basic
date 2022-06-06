@@ -1,7 +1,6 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -55,11 +54,46 @@ public class JpaMain {
 //            em.detach(findMember); // 특정 엔티디만 준영속 상태
 //            em.clear(); // 영속성 컨텍스트 완전히 초기화, 1차 캐시 통으로 초기화
 
-            Member member = new Member();
-            member.setUsername("A");
+//            Member member = new Member();
+//            member.setUsername("A");
 //            member.setRoleType(RoleType.GUEST);
 //            em.persist(member);
-            System.out.println("========================");
+
+            // 연관관계매핑 저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member2");
+            member.changeTeam(team);
+
+            // 양뱡향 관계 매핑시 실수
+            team.getMembers().add(member);
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+//            Member member = em.find(Member.class, 2L);
+//            System.out.println("member = " + member.getTeamId());
+//            Team team = em.find(Team.class, member.getTeamId());
+//            System.out.println("team.getName() = " + team.getName());
+
+//            Member findMember = em.find(Member.class, member.getId());
+//            Team findTeam = findMember.getTeam();
+
+            // 수정
+//            Team newTeam = em.find(Team.class, 100L);
+//            findMember.setTeam(newTeam);
+
+//            List<Member> members = findMember.getTeam().getMembers();
+
+//            members.forEach(m -> {
+//                System.out.println("m.getUsername() = " + m.getUsername());
+//            });
+
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
