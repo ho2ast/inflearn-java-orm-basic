@@ -60,20 +60,20 @@ public class JpaMain {
 //            em.persist(member);
 
             // 연관관계매핑 저장
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
-
-            Member member = new Member();
-            member.setUsername("member2");
-            member.changeTeam(team);
+//            Team team = new Team();
+//            team.setName("TeamA");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setUsername("member2");
+//            member.changeTeam(team);
 
             // 양뱡향 관계 매핑시 실수
-            team.getMembers().add(member);
-            em.persist(member);
-
-            em.flush();
-            em.clear();
+//            team.getMembers().add(member);
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
 
 //            Member member = em.find(Member.class, 2L);
 //            System.out.println("member = " + member.getTeamId());
