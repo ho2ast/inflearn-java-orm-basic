@@ -1,6 +1,7 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -92,7 +93,47 @@ public class JpaMain {
 //            members.forEach(m -> {
 //                System.out.println("m.getUsername() = " + m.getUsername());
 //            });
+//            Team team = new Team();
+//            team.setName("teamA");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setUsername("userA");
+//            member.setTeam(team);
+//            em.persist(member);
+//
+//
+//            em.flush();
+//            em.clear();
 
+//            Member findMember = em.find(Member.class, member.getId());
+//            System.out.println("findMember = " + findMember.getTeam().getClass());
+//            System.out.println("findMember.getTeam().getName() = " + findMember.getTeam().getName());
+//            System.out.println("findMember = " + findMember.getUsername());
+//            Member findMember = em.getReference(Member.class, member.getId()); // 프록시 객체 반환
+//            System.out.println("findMember = " + findMember.getUsername());
+
+//            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
+//                    .getResultList();
+
+            Child child1 = new Child();
+            Child child2 = new Child();
+
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            // cascade all 하면 됨
+//            em.persist(child1);
+//            em.persist(child2);
+            em.persist(parent);
+
+            em.flush();
+            em.clear();
+
+            Parent findParent = em.find(Parent.class, parent.getId());
+//            findParent.getChildList().remove(0);
+            em.remove(findParent);
 
             tx.commit();
         } catch (Exception e) {
