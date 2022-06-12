@@ -116,24 +116,38 @@ public class JpaMain {
 //            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
 //                    .getResultList();
 
-            Child child1 = new Child();
-            Child child2 = new Child();
-
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
+//            Child child1 = new Child();
+//            Child child2 = new Child();
+//
+//            Parent parent = new Parent();
+//            parent.addChild(child1);
+//            parent.addChild(child2);
 
             // cascade all 하면 됨
 //            em.persist(child1);
 //            em.persist(child2);
-            em.persist(parent);
-
-            em.flush();
-            em.clear();
-
-            Parent findParent = em.find(Parent.class, parent.getId());
+//            em.persist(parent);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Parent findParent = em.find(Parent.class, parent.getId());
 //            findParent.getChildList().remove(0);
-            em.remove(findParent);
+//            em.remove(findParent);
+
+            Address address = new Address("seoul", "uma", "11111");
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setHomeAddress(address);
+            em.persist(member);
+
+            // 값을 완전히 갈아 끼워서 변경 해야함.
+            Address address2 = new Address("newCity", address.getStreet(), address.getZipcode());
+            member.setHomeAddress(address2);
+
+            // setter를 private로 만들어서 불변 객체로 만듦..
+//            member.getHomeAddress().setCity("newCity");
 
             tx.commit();
         } catch (Exception e) {
