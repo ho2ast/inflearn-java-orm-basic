@@ -135,20 +135,49 @@ public class JpaMain {
 //            findParent.getChildList().remove(0);
 //            em.remove(findParent);
 
-            Address address = new Address("seoul", "uma", "11111");
+//            Address address = new Address("seoul", "uma", "11111");
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setHomeAddress(address);
-            em.persist(member);
+//            Member member = new Member();
+//            member.setUsername("member1");
+//            member.setHomeAddress(address);
+//            em.persist(member);
 
             // 값을 완전히 갈아 끼워서 변경 해야함.
-            Address address2 = new Address("newCity", address.getStreet(), address.getZipcode());
-            member.setHomeAddress(address2);
+//            Address address2 = new Address("newCity", address.getStreet(), address.getZipcode());
+//            member.setHomeAddress(address2);
 
             // setter를 private로 만들어서 불변 객체로 만듦..
 //            member.getHomeAddress().setCity("newCity");
 
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setHomeAddress(new Address("homeCity", "uma", "11111"));
+
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("피자");
+            member.getFavoriteFoods().add("족발");
+
+            member.getAddressHistory().add(new AddressEntity("old1", "uma", "11111"));
+            member.getAddressHistory().add(new AddressEntity("old2", "uma", "11111"));
+
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+
+            // Member의 주소를 변경
+//            Address a = findMember.getHomeAddress();
+//            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
+
+            //  favorite 음식 하나 변경
+//            findMember.getFavoriteFoods().remove("치킨");
+//            findMember.getFavoriteFoods().add("한식");
+
+            // addressHistory 하나를 변경하고 싶음
+//            findMember.getAddressHistory().remove(new AddressEntity("old1", "uma", "11111"));
+//            findMember.getAddressHistory().add(new AddressEntity("newCity1", "uma", "11111"));
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
