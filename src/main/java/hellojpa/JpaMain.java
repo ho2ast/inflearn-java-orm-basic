@@ -149,23 +149,23 @@ public class JpaMain {
             // setter를 private로 만들어서 불변 객체로 만듦..
 //            member.getHomeAddress().setCity("newCity");
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setHomeAddress(new Address("homeCity", "uma", "11111"));
-
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("피자");
-            member.getFavoriteFoods().add("족발");
-
-            member.getAddressHistory().add(new AddressEntity("old1", "uma", "11111"));
-            member.getAddressHistory().add(new AddressEntity("old2", "uma", "11111"));
-
-            em.persist(member);
-
-            em.flush();
-            em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
+//            Member member = new Member();
+//            member.setUsername("member1");
+//            member.setHomeAddress(new Address("homeCity", "uma", "11111"));
+//
+//            member.getFavoriteFoods().add("치킨");
+//            member.getFavoriteFoods().add("피자");
+//            member.getFavoriteFoods().add("족발");
+//
+//            member.getAddressHistory().add(new AddressEntity("old1", "uma", "11111"));
+//            member.getAddressHistory().add(new AddressEntity("old2", "uma", "11111"));
+//
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Member findMember = em.find(Member.class, member.getId());
 
             // Member의 주소를 변경
 //            Address a = findMember.getHomeAddress();
@@ -178,6 +178,18 @@ public class JpaMain {
             // addressHistory 하나를 변경하고 싶음
 //            findMember.getAddressHistory().remove(new AddressEntity("old1", "uma", "11111"));
 //            findMember.getAddressHistory().add(new AddressEntity("newCity1", "uma", "11111"));
+
+            //====JPQL Example
+//            List<Member> result = em.createQuery("select m from Member m where m.username like '&kim%'",
+//                            Member.class)
+//                    .getResultList();
+//            for (Member member : result) {
+//                System.out.println("member = " + member);
+//            }
+
+//            em.createNativeQuery("select * from MEMBER").getResultList();
+
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
